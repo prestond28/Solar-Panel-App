@@ -1,21 +1,37 @@
-// import { useState } from 'react'
+import { useState } from 'react'
 import './index.css';
 import { doLogin } from './app';
 import { useNavigate, Link } from 'react-router-dom';
+import { BarsOutlined } from '@ant-design/icons';
+import { Drawer } from 'antd';
 
 function Login() {
 
 const navigate = useNavigate();
+const [openDrawer, setOpenDrawer] = useState(false);
+  
+    const showDrawer = () => {
+      setOpenDrawer(true);
+    };
+  
+    const onClose = () => {
+      setOpenDrawer(false);
+    };
+
   return (
     <>
-      <div className="body">
+      <div className="body" id='bodyLogin'>
         <header>
-          <nav className="nav">
-            <Link to="/home" className='navlink'>home</Link>
-            <Link to="/about" className='navlink'>about</Link>
-          </nav>
+        <nav className="nav">
+          <BarsOutlined style={{ fontSize: '30px', cursor: 'pointer' }} onClick={showDrawer}/>
+          <div className='title'>Welcome to a really basic solar app!</div>
+        </nav>
         </header>
         <div className="content">
+          <Drawer title="Menu" onClose={onClose} open={openDrawer} placement="left">
+            <Link to="/home" className='navlink'>home</Link>
+            <Link to="/about" className='navlink'>about</Link>
+          </Drawer>
           <div className="login">
             <div className="inputs-and-labels">
               <label htmlFor="username">Username:</label><input className="input-field" id="username" type="text" />
@@ -25,6 +41,7 @@ const navigate = useNavigate();
               <button onClick={(e) => doLogin(e, navigate)}>Login</button>
               <Link to="/register" className='navlink'>Register</Link>
             </div>
+            <Link to="/home" className='guest'>Continue as guest</Link>
           </div>
         </div>
         <div className="footer">
