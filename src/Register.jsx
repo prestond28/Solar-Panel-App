@@ -1,22 +1,38 @@
-// import { useState } from 'react'
+import { useState } from 'react'
 import './index.css';
 import { doRegister } from './app';
 import { useNavigate, Link } from 'react-router-dom';
+import { Drawer } from 'antd';
+import { BarsOutlined } from '@ant-design/icons';
 
 function Register() {
   
 const navigate = useNavigate();
 
+const [openDrawer, setOpenDrawer] = useState(false);
+  
+    const showDrawer = () => {
+      setOpenDrawer(true);
+    };
+  
+    const onClose = () => {
+      setOpenDrawer(false);
+    };
+
   return (
     <>
-      <div className="body">
+      <div className="body" id='bodyRegister'>
         <header>
-          <nav className="nav">
-            <Link to="/home" className='navlink'>home</Link>
-            <Link to="/about" className='navlink'>about</Link>
-          </nav>
+        <nav className="nav">
+          <BarsOutlined style={{ fontSize: '30px', cursor: 'pointer' }} onClick={showDrawer}/>
+          <div className='title'>Welcome to a really basic solar app!</div>
+        </nav>
         </header>
         <div className="content">
+          <Drawer title="Menu" onClose={onClose} open={openDrawer} placement="left">
+            <Link to="/home" className='navlink'>home</Link>
+            <Link to="/about" className='navlink'>about</Link>
+          </Drawer>
           <div className="register">
             <div className="inputs-and-labels">
               <label htmlFor="username" className="input-field-label">Username:</label><input className="input-field" id="username" type="text" />
